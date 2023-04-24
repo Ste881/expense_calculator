@@ -1,63 +1,50 @@
 import sys
-expense=[0, 0, 0, 0, 0, 0, 0, 0]
-print(f"expense array={expense}")
 
-n=7
 default_menu={1:'Food', 2:'Medication', 3:'Entertainment', 4:'Groceries', 5:'Travel', 6:'Clothing', 7:'Makeup'}
+n=len(default_menu)
+
+expense=[0]*n
 
 expense_type=0
-def Existing_menu():
-  while expense_type < 9 :
-    # print("Choose the type of expense: ")
-    # print("1. Food")
-    # print("2. Medication")
-    # print("3. Entertainment")
-    # print("4. Groceries")
-    # print("5. Travel")
-    # print("6. Clothing")
-    # print("7. Makeup")
-    # print("8. Other:")
+def existing_menu():
+  while True :
+    x=0
+    for i in default_menu:
+      if len(default_menu[i])>x:
+        x=len(default_menu[i])
+    print("No.   "+"Expense Type".ljust(x+4,' ')+ "Amount")
+    for i in default_menu:
+      print(str(i)+".    "+default_menu[i].ljust(x+4,' ')+str(expense[i-1]))
+
     print("b.back")
-
+   
+    expense_type=input("Enter the type of expense: ")
     
-  #for loop dictionary
-    expense_type=int(input("Enter the type of expense: ")) 
-    
-    if str(expense_type)==b:
+    if expense_type=='b':
       return
-    if expense_type>8:
-      break
-     
- #if condn for 8
-  expense_amount=float(input("Enter the amount: "))
-  
-  exp_report(expense_type, expense_amount)
-
-
-
+    if int(expense_type)>n or expense_type.isalpha():
+      print("Not valid")
+    else:
+      expense_amount=float(input("Enter the amount: "))
+      exp_report(int(expense_type), expense_amount)
 
 def exp_report(exp_type, exp_amount):
-  if exp_type <= 7:
     expense[exp_type-1]=expense[exp_type-1]+exp_amount
-    print(f"expense array={expense}")
-  else:
-    print("not valid")
+    
 
-
-while true:
+while True:
 
   print("Choose an option: ")
-  #menu_dic={'a':{'':{1: 'Food', 2: 'Medication', 3:'Entertainment', 4:'Groceries', 5:'Travel', 6:'Clothing', 7:'Makeup'}}, 'b':{'Add new menu':''}, 'c':'exit'}
-  print("a. Existing menu")
   print("b. Add new category")
   print("c. Exit")
 
   x=input("Enter the letter: ")
-  if x==a:
-    Existing_menu()
-  elif x==b:
+  if x=='a':
+    existing_menu()
+  elif x=='b':
    new_cat_name=input("Enter new category name: ")
    default_menu[n+1]=new_cat_name
+   expense.append(0)
    n=n+1
   else:
      sys.exit()
