@@ -16,11 +16,20 @@ def existing_menu():
     for i in default_menu:
       print(str(i)+".    "+default_menu[i].ljust(x+4,' ')+str(expense[i-1]))
 
+    print("t.total")
     print("b.back")
     print("d.delete all")
     print("p.delete particular category")
    
     expense_type=input("Enter the type of expense: ")
+    
+    if expense_type=='t':
+      el=len(expense)
+      for i in range(el):
+        total=0
+        total=total+expense[i] #it is adding up values in the expense list that is existing as global variable
+      print(f"Total expense is: {total}")
+      return
     
     if expense_type=='d':
       default_menu.clear()
