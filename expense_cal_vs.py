@@ -17,20 +17,28 @@ def existing_menu():
       print(str(i)+".    "+default_menu[i].ljust(x+4,' ')+str(expense[i-1]))
 
     print("b.back")
-    print("d.delete")
+    print("d.delete all")
+    print("p.delete particular category")
    
     expense_type=input("Enter the type of expense: ")
-
+    
     if expense_type=='d':
-      expense_del=input("Enter the type of expense you wanna delete or click 'b' to cancel: ")
-      if expense_del=='b':
-        return
-      del default_menu[int(expense_del)]
+      default_menu.clear()
       return
+
+    if expense_type=='p':
+      specific_eli=input("Enter the type of expense you wanna delete or click 'b' to cancel: ")
+      if specific_eli=='b':
+        return
+      del default_menu[int(specific_eli)]
+      return
+
     if expense_type=='b':
       return
+
     if int(expense_type)>n or expense_type.isalpha():
       print("Not valid")
+
     else:
       expense_amount=float(input("Enter the amount: "))
       exp_report(int(expense_type), expense_amount)
