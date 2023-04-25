@@ -17,9 +17,16 @@ def existing_menu():
       print(str(i)+".    "+default_menu[i].ljust(x+4,' ')+str(expense[i-1]))
 
     print("b.back")
+    print("d.delete")
    
     expense_type=input("Enter the type of expense: ")
-    
+
+    if expense_type=='d':
+      expense_del=input("Enter the type of expense you wanna delete or click 'b' to cancel: ")
+      if expense_del=='b':
+        return
+      del default_menu[int(expense_del)]
+      return
     if expense_type=='b':
       return
     if int(expense_type)>n or expense_type.isalpha():
@@ -30,11 +37,11 @@ def existing_menu():
 
 def exp_report(exp_type, exp_amount):
     expense[exp_type-1]=expense[exp_type-1]+exp_amount
-    
 
 while True:
 
   print("Choose an option: ")
+  print("a. Default menu")
   print("b. Add new category")
   print("c. Exit")
 
