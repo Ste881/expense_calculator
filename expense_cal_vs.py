@@ -18,9 +18,7 @@ def existing_menu():
 
     print("t.total")
     print("b.back")
-    print("d.delete all")
-    print("p.delete particular category")
-   
+
     expense_type=input("Enter the type of expense: ")
     
     if expense_type=='t':
@@ -30,17 +28,6 @@ def existing_menu():
       for i in range(el):
         total=total+expense[i] #it is adding up values in the expense list that is existing as global variable
       print(f"Total expense is: {total}")
-      return
-    
-    if expense_type=='d':
-      default_menu.clear()
-      return
-
-    if expense_type=='p':
-      specific_eli=input("Enter the type of expense you wanna delete or click 'b' to cancel: ")
-      if specific_eli=='b':
-        return
-      del default_menu[int(specific_eli)]
       return
 
     if expense_type=='b':
@@ -61,15 +48,35 @@ while True:
   print("Choose an option: ")
   print("a. Default menu")
   print("b. Add new category")
-  print("c. Exit")
+  print("c. Delete particular category")
+  print("d. Delete all category")
+  print("e. Exit")
 
   x=input("Enter the letter: ")
   if x=='a':
     existing_menu()
+
   elif x=='b':
    new_cat_name=input("Enter new category name: ")
    default_menu[n+1]=new_cat_name
    expense.append(0)
    n=n+1
+
+  elif x=='c':
+    x=0
+    for i in default_menu:
+      if len(default_menu[i])>x:
+        x=len(default_menu[i])
+    print("No.   "+"Expense Type".ljust(x+4,' ')+ "Amount")
+    for i in default_menu:
+      print(str(i)+".    "+default_menu[i].ljust(x+4,' ')+str(expense[i-1]))
+    specific_eli=input("Enter the type of expense you wanna delete or click 'b' to cancel: ")
+    if specific_eli=='b':
+      continue
+    del default_menu[int(specific_eli)]
+
+  elif x=='d':
+    default_menu.clear()
+      
   else:
      sys.exit()
