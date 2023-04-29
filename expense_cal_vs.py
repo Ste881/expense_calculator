@@ -24,9 +24,10 @@ def existing_menu():
     expense_type=input("Enter the type of expense: ")
     
     if expense_type=='t':
-      el=len(expense)
+      el=len(expense) 
+      total=0
+      print(expense_amount)
       for i in range(el):
-        total=0
         total=total+expense[i] #it is adding up values in the expense list that is existing as global variable
       print(f"Total expense is: {total}")
       return
