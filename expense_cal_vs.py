@@ -1,4 +1,5 @@
 import sys
+import sqlite3
 
 default_menu={1:'Food', 2:'Medication', 3:'Entertainment', 4:'Groceries', 5:'Travel', 6:'Clothing', 7:'Makeup'}
 n=len(default_menu)
