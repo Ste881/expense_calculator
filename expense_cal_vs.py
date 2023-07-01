@@ -1,12 +1,14 @@
 import sys
-import sqlite3
+import mysql.connector
+
+from expense_cal_db import create_expenses_table, insert_expense, close_connection
 
 default_menu={1:'Food', 2:'Medication', 3:'Entertainment', 4:'Groceries', 5:'Travel', 6:'Clothing', 7:'Makeup'}
 n=len(default_menu)
 
 expense=[0]*n
-
 expense_type=0
+
 def existing_menu():
   while True :
     x=0
@@ -81,3 +83,7 @@ while True:
       
   else:
      sys.exit()
+
+if __name__ == '__main__':
+    create_expenses_table()
+    close_connection()
