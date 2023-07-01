@@ -10,6 +10,13 @@ db = mysql.connector.connect(
 
 mycursor = db.cursor()
 
+# Drop the existing 'expenses' table (if it exists)
+drop_table_query = '''
+    DROP TABLE IF EXISTS expenses
+'''
+mycursor.execute(drop_table_query)
+db.commit()
+
 # Create a table to store all expenses
 def create_expenses_table():
     create_table_query = '''
@@ -24,6 +31,7 @@ def create_expenses_table():
     mycursor.execute(create_table_query)
     db.commit()
     print('Table expenses created')
+
 
 # Insert data into the expenses table
 def insert_expense(user_id, expensetype, amount):
@@ -46,25 +54,22 @@ def close_connection():
 if __name__ == '__main__':
     create_expenses_table()
 
-    user_id_1 = 1
-    user_id_2 = 2
+    users = []
 
-    # Sample expenses for user 1
-    expenses_user_1 = [
-        ('Food', 50.25),
-        ('Utilities', 100.75)
-    ]
+    while True:
+        user_id = int(input("Enter the user ID (0 to stop): "))
+        if user_id == 0:
+            break
+        user_name = input("Enter the user's name: ")
+        users.append({'id': user_id, 'name': user_name})
 
-    # Sample expenses for user 2
-    expenses_user_2 = [
-        ('Food', 30.50),
-        ('Travel', 200.00)
-    ]
-
-    for expensetype, amount in expenses_user_1:
-        insert_expense(user_id_1, expensetype, amount)
-
-    for expensetype, amount in expenses_user_2:
-        insert_expense(user_id_2, expensetype, amount)
+    for user in users:
+        print(f"Processing expenses for {user['name']}")
+        while True:
+            expensetype = input("Enter the expense type (press Enter to stop): ")
+            if not expensetype:
+                break
+            amount = float(input("Enter the amount: "))
+            insert_expense(user['id'], expensetype, amount)
 
     close_connection()
