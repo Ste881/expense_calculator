@@ -32,44 +32,18 @@ def create_expenses_table():
     db.commit()
     print('Table expenses created')
 
-
 # Insert data into the expenses table
 def insert_expense(user_id, expensetype, amount):
-    insert_data_query = '''
+    insert_expense_query = '''
         INSERT INTO expenses (user_id, expensetype, amount)
         VALUES (%s, %s, %s)
     '''
     data = (user_id, expensetype, amount)
-    mycursor.execute(insert_data_query, data)
+    mycursor.execute(insert_expense_query, data)
     db.commit()
-    print('Expense inserted')
+    print('Expense inserted successfully')
 
-# Close the connection
+# Close the database connection
 def close_connection():
-    if db.is_connected():
-        mycursor.close()
-        db.close()
-        print('Connection closed')
-
-if __name__ == '__main__':
-    create_expenses_table()
-
-    users = []
-
-    while True:
-        user_id = int(input("Enter the user ID (0 to stop): "))
-        if user_id == 0:
-            break
-        user_name = input("Enter the user's name: ")
-        users.append({'id': user_id, 'name': user_name})
-
-    for user in users:
-        print(f"Processing expenses for {user['name']}")
-        while True:
-            expensetype = input("Enter the expense type (press Enter to stop): ")
-            if not expensetype:
-                break
-            amount = float(input("Enter the amount: "))
-            insert_expense(user['id'], expensetype, amount)
-
-    close_connection()
+    db.close()
+    print('Database connection closed')
