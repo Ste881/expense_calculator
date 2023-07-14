@@ -43,6 +43,17 @@ def insert_expense(user_id, expensetype, amount):
     db.commit()
     print('Expense inserted successfully')
 
+def update_expense(expensetype, amount):
+    update_expense_query = '''
+        UPDATE expenses 
+        SET amount = %s
+        WHERE expensetype = %s
+    '''
+    data = (amount, expensetype)
+    mycursor.execute(update_expense_query, data)
+    db.commit()
+    print('Expense updated successfully')
+
 # Close the database connection
 def close_connection():
     db.close()

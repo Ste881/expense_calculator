@@ -37,6 +37,7 @@ def existing_menu():
 
 def exp_report(exp_type, exp_amount):
     expense[exp_type-1]=expense[exp_type-1]+exp_amount
+    insert_expense(3, default_menu[exp_type], exp_amount)
 
 default_menu = {1: 'Food', 2: 'Medication', 3: 'Entertainment', 4: 'Groceries', 5: 'Travel', 6: 'Clothing', 7: 'Makeup'}
 n = len(default_menu)
@@ -46,8 +47,8 @@ expense_type = 0
 if __name__ == '__main__':
     create_expenses_table()
 
-    user_id = int(input("Enter the user ID: "))
-    user_name = input("Enter the user's name: ")
+    # user_id = int(input("Enter the user ID: "))
+    # user_name = input("Enter the user's name: ")
 
     while True:
         print("Choose an option: ")
@@ -91,9 +92,9 @@ if __name__ == '__main__':
             print("Invalid option. Please try again.")
 
         # If the user wants to enter expenses, ask for expense type and amount directly
-        if x == 'a':
-            expense_type = input("Enter the expense type (press Enter to stop): ")
-            while expense_type:
-                amount = float(input("Enter the amount: "))
-                insert_expense(user_id, expense_type, amount)
-                expense_type = input("Enter the expense type (press Enter to stop): ")
+        # if x == 'a':
+        #     expense_type = input("Enter the expense type (press Enter to stop): ")
+        #     while expense_type:
+        #         amount = float(input("Enter the amount: "))
+        #         insert_expense(user_id, expense_type, amount)
+        #         expense_type = input("Enter the expense type (press Enter to stop): ")
