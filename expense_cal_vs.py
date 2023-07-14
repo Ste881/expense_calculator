@@ -1,5 +1,5 @@
 import sys
-from expense_cal_db import create_expenses_table, insert_expense, close_connection
+from expense_cal_db import create_expenses_table, insert_expense, update_expense, close_connection
 
 # Define existing_menu, default_menu, and expense as provided
 
@@ -36,8 +36,12 @@ def existing_menu():
             exp_report(int(expense_type), expense_amount)
 
 def exp_report(exp_type, exp_amount):
-    expense[exp_type-1]=expense[exp_type-1]+exp_amount
-    insert_expense(3, default_menu[exp_type], exp_amount)
+    if expense[exp_type-1]==0:
+     expense[exp_type-1]=expense[exp_type-1]+exp_amount
+     insert_expense(3, default_menu[exp_type], exp_amount)
+    else:
+      expense[exp_type-1]=expense[exp_type-1]+exp_amount
+      update_expense(default_menu[exp_type], expense[exp_type-1])
 
 default_menu = {1: 'Food', 2: 'Medication', 3: 'Entertainment', 4: 'Groceries', 5: 'Travel', 6: 'Clothing', 7: 'Makeup'}
 n = len(default_menu)
@@ -47,8 +51,6 @@ expense_type = 0
 if __name__ == '__main__':
     create_expenses_table()
 
-    # user_id = int(input("Enter the user ID: "))
-    # user_name = input("Enter the user's name: ")
 
     while True:
         print("Choose an option: ")
@@ -91,10 +93,4 @@ if __name__ == '__main__':
         else:
             print("Invalid option. Please try again.")
 
-        # If the user wants to enter expenses, ask for expense type and amount directly
-        # if x == 'a':
-        #     expense_type = input("Enter the expense type (press Enter to stop): ")
-        #     while expense_type:
-        #         amount = float(input("Enter the amount: "))
-        #         insert_expense(user_id, expense_type, amount)
-        #         expense_type = input("Enter the expense type (press Enter to stop): ")
+        
