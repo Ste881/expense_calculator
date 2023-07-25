@@ -54,7 +54,7 @@ def update_expense(expensetype, amount):
     db.commit()
     print('Expense updated successfully')
 
-def delete_expense(expensetype):
+def delete_expense_particular(expensetype):
     delete_expense_query='''
      DELETE FROM expenses WHERE expensetype=%s
      '''
@@ -62,6 +62,14 @@ def delete_expense(expensetype):
     mycursor.execute(delete_expense_query, data)
     db.commit()
     print('Deleted successfully')
+
+def delete_all_expense():
+    delete_all_expense_query='''
+     DELETE FROM expenses
+     '''
+    mycursor.execute(delete_all_expense_query)
+    db.commit
+    print('Deleted all Categories')
 
 # Close the database connection
 def close_connection():

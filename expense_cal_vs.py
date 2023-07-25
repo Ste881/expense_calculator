@@ -1,5 +1,5 @@
 import sys
-from expense_cal_db import create_expenses_table, delete_expense, insert_expense, update_expense, close_connection
+from expense_cal_db import create_expenses_table, delete_expense_particular, delete_all_expense, insert_expense, update_expense, close_connection
 
 # Define existing_menu, default_menu, and expense as provided
 
@@ -81,12 +81,13 @@ if __name__ == '__main__':
             specific_eli = input("Enter the type of expense you wanna delete or click 'b' to cancel: ")
             if specific_eli == 'b':
                 continue
-            delete_expense(default_menu[int(specific_eli)])
+            delete_expense_particular(default_menu[int(specific_eli)])
             del default_menu[int(specific_eli)]
             
 
         elif x == 'd':
             default_menu.clear()
+            delete_all_expense()
 
         elif x == 'e':
             close_connection()
