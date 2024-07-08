@@ -13,8 +13,8 @@ def existing_menu():
         for i in default_menu:
             print(str(i) + ".    " + default_menu[i].ljust(x + 4, ' ') + str(expense[i - 1]))
 
-        print("t.total")
-        print("b.back")
+        print("press 't' for total")
+        print("press 'b' to go back")
 
         expense_type = input("Enter the type of expense: ")
 
@@ -42,6 +42,10 @@ def exp_report(exp_type, exp_amount):
     else:
       expense[exp_type-1]=expense[exp_type-1]+exp_amount
       update_expense(default_menu[exp_type], expense[exp_type-1])
+
+# def show_savings(money_spent, income):
+#     income = int(input("Please enter the total amount of your income: "))
+
 
 default_menu = {1: 'Food', 2: 'Medication', 3: 'Entertainment', 4: 'Groceries', 5: 'Travel', 6: 'Clothing', 7: 'Makeup'}
 n = len(default_menu)
@@ -92,6 +96,9 @@ if __name__ == '__main__':
         elif x == 'e':
             close_connection()
             sys.exit()
+
+        # elif x == 'f':
+        #     pass
 
         else:
             print("Invalid option. Please try again.")
