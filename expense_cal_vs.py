@@ -43,8 +43,10 @@ def exp_report(exp_type, exp_amount):
       expense[exp_type-1]=expense[exp_type-1]+exp_amount
       update_expense(default_menu[exp_type], expense[exp_type-1])
 
-# def show_savings(money_spent, income):
-#     income = int(input("Please enter the total amount of your income: "))
+def show_savings(total_income):
+    total_expense = sum(expense)
+    savings = total_income - total_expense
+    print(f"Total savings is: {savings}")
 
 
 default_menu = {1: 'Food', 2: 'Medication', 3: 'Entertainment', 4: 'Groceries', 5: 'Travel', 6: 'Clothing', 7: 'Makeup'}
@@ -62,7 +64,8 @@ if __name__ == '__main__':
         print("b. Add new category")
         print("c. Delete particular category")
         print("d. Delete all category")
-        print("e. Exit")
+        print("e. View savings")
+        print("f. Exit")
 
         x = input("Enter the letter: ")
         if x == 'a':
@@ -94,11 +97,12 @@ if __name__ == '__main__':
             delete_all_expense()
 
         elif x == 'e':
+            total_income = float(input("Enter your total income: "))
+            show_savings(total_income)
+
+        elif x == 'f':
             close_connection()
             sys.exit()
-
-        # elif x == 'f':
-        #     pass
 
         else:
             print("Invalid option. Please try again.")
