@@ -48,6 +48,12 @@ def show_savings(total_income):
     savings = total_income - total_expense
     print(f"Total savings is: {savings}")
 
+def show_inflation_adjusted_savings(total_income, inflation_rate):
+    total_expense = sum(expense)
+    savings = total_income - total_expense
+    inflation_adjusted_savings = savings / (1 + inflation_rate)
+    print(f"Inflation-adjusted savings is: {inflation_adjusted_savings}")
+
 
 default_menu = {1: 'Food', 2: 'Medication', 3: 'Entertainment', 4: 'Groceries', 5: 'Travel', 6: 'Clothing', 7: 'Makeup'}
 n = len(default_menu)
@@ -64,8 +70,9 @@ if __name__ == '__main__':
         print("b. Add new category")
         print("c. Delete particular category")
         print("d. Delete all category")
-        print("e. View savings")
-        print("f. Exit")
+        print("e. Show savings")
+        print("f. Show inflation-adjusted savings")
+        print("g. Exit")
 
         x = input("Enter the letter: ")
         if x == 'a':
@@ -101,6 +108,11 @@ if __name__ == '__main__':
             show_savings(total_income)
 
         elif x == 'f':
+            total_income = float(input("Enter your total income: "))
+            inflation_rate = float(input("Enter the current inflation rate (as a decimal, e.g., 0.03 for 3%): "))
+            show_inflation_adjusted_savings(total_income, inflation_rate)
+
+        elif x == 'g':
             close_connection()
             sys.exit()
 
