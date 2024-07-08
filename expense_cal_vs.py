@@ -51,7 +51,7 @@ def show_savings(total_income):
 def show_inflation_adjusted_savings(total_income, inflation_rate):
     total_expense = sum(expense)
     savings = total_income - total_expense
-    inflation_adjusted_savings = savings / (1 + inflation_rate)
+    inflation_adjusted_savings = round(savings / (1 + inflation_rate), 2)
     print(f"Inflation-adjusted savings is: {inflation_adjusted_savings}")
 
 
