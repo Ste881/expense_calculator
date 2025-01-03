@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector import Error
 
 # Connect to MySQL server
 db = mysql.connector.connect(
@@ -10,14 +11,39 @@ db = mysql.connector.connect(
 
 mycursor = db.cursor()
 
-# Drop the existing 'expenses' table (if it exists)
-drop_table_query = '''
-    DROP TABLE IF EXISTS expenses
-'''
-mycursor.execute(drop_table_query)
-db.commit()
+def create_users_table():
+    create_table_query = '''
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(50) NOT NULL UNIQUE,
+            password VARCHAR(50) NOT NULL
+        )
+    '''
+    mycursor.execute(create_table_query)
+    db.commit()
 
-# Create a table to store all expenses
+def register_user(username, password):
+    try:
+        insert_user_query = '''
+            INSERT INTO users (username, password)
+            VALUES (%s, %s)
+        '''
+        mycursor.execute(insert_user_query, (username, password))
+        db.commit()
+        print('User registered successfully.')
+    except Error as e:
+        print(f"Error registering user: {e}")
+
+def login_user(username, password):
+    login_query = '''
+        SELECT id FROM users WHERE username = %s AND password = %s
+    '''
+    mycursor.execute(login_query, (username, password))
+    result = mycursor.fetchone()
+    if result:
+        return result[0]
+    return None
+
 def create_expenses_table():
     create_table_query = '''
         CREATE TABLE IF NOT EXISTS expenses (
@@ -25,23 +51,20 @@ def create_expenses_table():
             user_id INT NOT NULL,
             expensetype VARCHAR(50) NOT NULL,
             amount FLOAT NOT NULL,
-            UNIQUE KEY unique_expense (user_id, expensetype)
+            UNIQUE KEY unique_expense (user_id, expensetype),
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
     '''
     mycursor.execute(create_table_query)
     db.commit()
-    print('Table expenses created')
 
-# Insert data into the expenses table
 def insert_expense(user_id, expensetype, amount):
     insert_expense_query = '''
         INSERT INTO expenses (user_id, expensetype, amount)
         VALUES (%s, %s, %s)
     '''
-    data = (user_id, expensetype, amount)
-    mycursor.execute(insert_expense_query, data)
+    mycursor.execute(insert_expense_query, (user_id, expensetype, amount))
     db.commit()
-    print('Expense inserted successfully')
 
 def update_expense(expensetype, amount):
     update_expense_query = '''
@@ -49,29 +72,22 @@ def update_expense(expensetype, amount):
         SET amount = %s
         WHERE expensetype = %s
     '''
-    data = (amount, expensetype)
-    mycursor.execute(update_expense_query, data)
+    mycursor.execute(update_expense_query, (amount, expensetype))
     db.commit()
-    print('Expense updated successfully')
 
 def delete_expense_particular(expensetype):
-    delete_expense_query='''
-     DELETE FROM expenses WHERE expensetype=%s
-     '''
-    data=(expensetype,)
-    mycursor.execute(delete_expense_query, data)
+    delete_expense_query = '''
+        DELETE FROM expenses WHERE expensetype = %s
+    '''
+    mycursor.execute(delete_expense_query, (expensetype,))
     db.commit()
-    print('Deleted successfully')
 
 def delete_all_expense():
-    delete_all_expense_query='''
-     DELETE FROM expenses
-     '''
+    delete_all_expense_query = '''
+        DELETE FROM expenses
+    '''
     mycursor.execute(delete_all_expense_query)
-    db.commit
-    print('Deleted all Categories')
+    db.commit()
 
-# Close the database connection
 def close_connection():
     db.close()
-    print('Database connection closed')
