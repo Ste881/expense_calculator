@@ -50,32 +50,37 @@ def show_inflation_adjusted_savings(total_income, inflation_rate):
     adjusted_savings = round((total_income - total_expense) / (1 + inflation_rate), 2)
     print(f"Inflation-adjusted savings: {adjusted_savings}")
 
+def login_flow():
+    while True:
+        username = input("Enter your username: ")
+        password = input("Enter your password: ")
+        user_id = login_user(username, password)
+        if user_id:
+            print("Login successful!")
+            return user_id
+        else:
+            print("Invalid username or password. Please try again.")
+
 if __name__ == '__main__':
     create_users_table()
     create_expenses_table()
 
     print("Welcome to Expense Calculator!")
-    print("1. Register")
-    print("2. Login")
-    choice = input("Enter your choice: ")
+    while True:
+        print("\n1. Register")
+        print("2. Login")
+        choice = input("Enter your choice: ")
 
-    if choice == '1':
-        username = input("Enter a username: ")
-        password = input("Enter a password: ")
-        register_user(username, password)
-        print("Registration successful. Please log in.")
-        sys.exit()
-
-    elif choice == '2':
-        username = input("Enter your username: ")
-        password = input("Enter your password: ")
-        user_id = login_user(username, password)
-        if not user_id:
-            print("Invalid username or password.")
-            sys.exit()
-    else:
-        print("Invalid choice.")
-        sys.exit()
+        if choice == '1':
+            username = input("Enter a username: ")
+            password = input("Enter a password: ")
+            register_user(username, password)
+            print("Registration successful. Please log in.")
+        elif choice == '2':
+            user_id = login_flow()
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
     while True:
         print("\nMain Menu:")
